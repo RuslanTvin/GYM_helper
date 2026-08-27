@@ -1,0 +1,15 @@
+2026-08-24:
+1:Delete exercise note from workout record was added to programm.
+2:Get_date functions was improved by giving user ability to change date in case if he entered wrong one by mistake.
+3:Fixed problem with get_choice when it shows unavailable options by using list instead of range() function as one of arguments for available options.
+4:Update_workout function was edited and adapted to new system.
+5.To delete_workout_record was updated and user can delete records multiple times during one function run.
+6:Some bug and visual fixes.
+7:Some minor features was added.
+
+2026-08-25:
+1.Delete workout functions was refactored,simplified and upgraded.
+2.Update workout note functions was simplified and now do only one thing,and UI part of this function became separate function
+3.2 new functions:choose_workout_record(), choose_exercise_note_in_record(), added to program that interact with user and return requested information. 
+4.Overall program refactoring and check for error.GYM_Helper v1 done.
+5.Bug fixes and QoL changes.
