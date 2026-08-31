@@ -13,3 +13,7 @@
 3.2 new functions:choose_workout_record(), choose_exercise_note_in_record(), added to program that interact with user and return requested information. 
 4.Overall program refactoring and check for error.GYM_Helper v1 done.
 5.Bug fixes and QoL changes.
+
+2026-08-30:
+1:Validation of input updated to prevent unrealistic input of weight,height,etc.
+2.Now app have 2 numeral systems.

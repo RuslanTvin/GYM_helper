@@ -1,6 +1,6 @@
 from input_part import*
 def  convert_menu()->str:
-    amount_of_lbs=validate_input(get_float,"What is number of pounds you want to convert!? ","pounds amount",False)
+    amount_of_lbs=validate_input(get_float,"What is number of pounds you want to convert!? ","pounds amount",float('-inf'),float('inf'))
     try:
         amount_of_lbs=float(amount_of_lbs)
         result=pounds_to_kilos(amount_of_lbs)

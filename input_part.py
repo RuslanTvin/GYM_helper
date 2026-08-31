@@ -31,15 +31,13 @@ def get_yes_or_no(text):
             return choice
         print("Incorrect input. Please enter 'yes' or 'no'.")
 
-def validate_input(function,text,variable_name,zero_allowed):
+def validate_input(function,text,variable_name,minimum,maximum):
     while True:
         input=function(text)
-        if input >= 0 and zero_allowed == True:
-            return input
-        elif input > 0 and zero_allowed == False:
+        if input >= minimum and input <= maximum:
             return input
         else:
-            print(variable_name,"cannot be negative or zero!")
+            print(variable_name,"should be in range from",minimum,"to",maximum)
 
 def get_choice(text, choices,string_choice_allowed):
     while True:
@@ -54,35 +52,53 @@ def get_choice(text, choices,string_choice_allowed):
                 return choice
             print("Incorrect input. Please enter one of the following:",choices)
             
-def get_physical_data(weight_or_height_or_both):
-    if weight_or_height_or_both == "both":
-        weight=validate_input(get_float,"What is your weight? ","weight",False)
-        height=validate_input(get_float,"What is your height? ","height",False)
-        return weight,height
-    elif weight_or_height_or_both == "height":
-        height=validate_input(get_float,"What is your height? ","height",False)
-        return height
-    elif weight_or_height_or_both == "weight":
-        weight=validate_input(get_float,"What is your weight? ","weight",False)
-        return weight
+def get_physical_data(weight_or_height_or_both,numeral_system):
+    if numeral_system == 1:
+        if weight_or_height_or_both == "both":
+            weight=validate_input(get_float,"What is your weight? ","weight",90,660)
+            height=validate_input(get_float,"What is your height?(Make sure that you entering only inches) ","height",39,100)
+            return weight,height
+        elif weight_or_height_or_both == "height":
+            height=validate_input(get_float,"What is your height? ","height",39,100)
+            return height
+        elif weight_or_height_or_both == "weight":
+            weight=validate_input(get_float,"What is your weight? ","weight",90,660)
+            return weight
+    elif numeral_system == 2:
+        if weight_or_height_or_both == "both":
+            weight=validate_input(get_float,"What is your weight? ","weight",40,300)
+            height=validate_input(get_float,"What is your height?(Make sure you entering only centimeters) ","height",100,250)
+            return weight,height
+        elif weight_or_height_or_both == "height":
+            height=validate_input(get_float,"What is your height? ","height",100,250)
+            return height
+        elif weight_or_height_or_both == "weight":
+            weight=validate_input(get_float,"What is your weight? ","weight",40,300)
+            return weight
 
 def get_exercise_name():
     exercise_name=get_string("What is name of exercise? ")
     return exercise_name
 
-def get_workout_data():
-    amount_of_sets=validate_input(get_integer,"How many sets of this exercise did you do?(enter number) ","amount of sets",False)
+def get_workout_data(numeral_system):
+    amount_of_sets=validate_input(get_integer,"How many sets of this exercise did you do?(enter number) ","amount of sets",1,30)
     
-    amount_of_reps=validate_input(get_integer,"How many reps of this exercise did you do in each set?(enter number) ","amount of reps",False)
-    
-    weight_for_exercise=validate_input(get_float,"With what weight did you exercise?(enter number) ","weight ",True)
+    amount_of_reps=validate_input(get_integer,"How many reps of this exercise did you do in each set?(enter number) ","amount of reps",1,100)
+
+    if numeral_system == 1:
+
+        weight_for_exercise=validate_input(get_float,"With what weight did you exercise?(enter number) ","weight ",0,1100)
+
+    elif numeral_system== 2:
+
+        weight_for_exercise=validate_input(get_float,"With what weight did you exercise?(enter number) ","weight ",0,500)
 
     return amount_of_sets,amount_of_reps,weight_for_exercise
 
-def get_workout_data_with_exercise_name():
+def get_workout_data_with_exercise_name(numeral_system):
     exercise_name = get_exercise_name()
 
-    amount_of_sets,amount_of_reps,weight_for_exercise = get_workout_data()
+    amount_of_sets,amount_of_reps,weight_for_exercise = get_workout_data(numeral_system)
 
     return exercise_name,amount_of_sets,amount_of_reps,weight_for_exercise
 
@@ -109,12 +125,12 @@ def get_date():
         except ValueError:
             print("Please enter correct date!!!")
 
-def add_exercise_note_for_one_workout(record_note):
-    exercise_name, sets, reps, weight = get_workout_data_with_exercise_name()
+def add_exercise_note_for_one_workout(record_note,numeral_system):
+    exercise_name, sets, reps, weight = get_workout_data_with_exercise_name(numeral_system)
     record_note = add_up_exercise_to_record_of_training(record_note,exercise_name, sets, reps, weight)
     add_another_exericse = get_yes_or_no("Would you like to add another exercise for this date? ")
     while add_another_exericse == "yes":
-        exercise_name, sets, reps, weight = get_workout_data_with_exercise_name()
+        exercise_name, sets, reps, weight = get_workout_data_with_exercise_name(numeral_system)
         record_note = add_up_exercise_to_record_of_training(record_note,exercise_name, sets, reps, weight)
         add_another_exericse = get_yes_or_no("Would you like to add another exercise for this date? ")
     return record_note

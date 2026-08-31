@@ -4,7 +4,7 @@ import input_part
 import progress_control.workout_file_modification_functions
 import helpful_functions
 
-def workout_save_option(FILE_NAME,list_of_progress):
+def workout_save_option(FILE_NAME,list_of_progress,numeral_system):
     day_of_record = str(datetime.date.today())
     
     specific_date_of_user = input_part.get_yes_or_no("Would you like to save workout of date you choose?(In case of 'no' today`s date will be used) ")
@@ -16,7 +16,7 @@ def workout_save_option(FILE_NAME,list_of_progress):
              "exercises":[
              ]
              }
-    record_note = input_part.add_exercise_note_for_one_workout(record_note)
+    record_note = input_part.add_exercise_note_for_one_workout(record_note,numeral_system)
     
     progress_control.workout_file_modification_functions.save_workout_progress(list_of_progress,record_note,FILE_NAME)
     
@@ -56,14 +56,14 @@ def delete_exercise_or_record_option(list_of_progress,file_name):
         date = input_part.get_date()
         progress_control.workout_file_modification_functions.delete_exercise_note_from_record(list_of_progress,file_name,date)
 
-def update_option (list_of_progress,file_name):
+def update_option (list_of_progress,file_name,numeral_system):
     date = input_part.get_date()
     workout_records_list = progress_control.workout_file_view_functions.find_workout_records_with_one_date(date,list_of_progress)
     if len(workout_records_list) > 0:
         index_of_record = helpful_functions.choose_workout_record(workout_records_list,list_of_progress)
         while True:
             which_note_to_update = helpful_functions.choose_exercise_note_in_record(list_of_progress[index_of_record])
-            exercise_name, sets, reps, weight = input_part.get_workout_data_with_exercise_name()
+            exercise_name, sets, reps, weight = input_part.get_workout_data_with_exercise_name(numeral_system)
             progress_control.workout_file_modification_functions.update_workout_note_in_record(list_of_progress,file_name,index_of_record,which_note_to_update,exercise_name,sets,reps,weight)
             print("Exercise note was succesfully updated.")
             update_another = input_part.get_yes_or_no("Do you want to edit another exercise note?(yes or no)")
